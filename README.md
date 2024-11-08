@@ -39,7 +39,7 @@ Compilation and Usage
 
 Compilation
 To compile the project, navigate to the project directory and run:
-make filter
+make
 
 Usage
 To apply a filter to an image, use the following command syntax:
