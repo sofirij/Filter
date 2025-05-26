@@ -1,78 +1,57 @@
-Filter-More
-Overview
-This project allows you to apply various image filters to 24-bit BMP files. The filters implemented include grayscale, reflection, blur, and edge detection. The program works by manipulating the RGB values of each pixel in the BMP file to produce the desired visual effect.
+# Filter - BMP Image Filter
 
-Problem to Solve
-Images are essentially grids of pixels, each with a specific color represented by values for red, green, and blue (RGB). By manipulating these RGB values, different filters can be applied to an image, creating effects such as grayscale, reflection, blurring, and edge detection.
+This project is a command-line tool for applying various filters to 24-bit uncompressed BMP image files. It supports grayscale, reflection, blur, and edge detection filters.
 
-Supported Filters:
-Grayscale: Converts the image to black and white by setting each pixel’s RGB values to the average of the original RGB values, giving a uniform gray shade.
+## Features
 
-Reflection: Reflects the image horizontally, creating a mirror effect.
+- **Grayscale**: Converts the image to shades of gray.
+- **Reflect**: Mirrors the image horizontally.
+- **Blur**: Applies a box blur to soften the image.
+- **Edges**: Detects edges using the Sobel operator.
 
-Blur: Applies a box blur effect by averaging the RGB values of each pixel’s surrounding pixels in a 3x3 grid.
+## Usage
 
-Edges: Detects edges in the image using the Sobel operator, highlighting boundaries between objects.
+```sh
+./filter [flag] infile outfile
+```
 
-Project Structure
-The project is composed of the following key files:
+- `[flag]`:
+  - `-b` : Blur
+  - `-e` : Edge detection
+  - `-g` : Grayscale
+  - `-r` : Reflect
+- `infile`: Path to the input BMP file.
+- `outfile`: Path to save the output BMP file.
 
-bmp.h: Defines data structures for BMP headers and pixel data.
-filter.c: Contains the main function and command-line parsing logic.
-helpers.c: Contains the implementation of the filters (functions for grayscale, reflection, blur, and edge detection).
-helpers.h: Provides prototypes for the filter functions.
-Makefile: Specifies how to compile the program.
+**Example:**
+```sh
+./filter -g images/tower.bmp images/tower-grayscale.bmp
+```
 
+## Building
 
-Implementation Details
-Grayscale Filter
-The grayscale filter sets each pixel’s RGB values to the average of its original RGB values, converting it to a shade of gray.
-Reflection Filter
-The reflection filter swaps pixels horizontally within each row of the image to achieve a mirror effect.
-Blur Filter
-The blur filter computes the average RGB values of each pixel’s neighboring pixels within a 3x3 grid, applying a softening effect.
-Edges Filter
-The edges filter uses the Sobel operator to detect edges by calculating the gradient in both horizontal (Gx) and vertical (Gy) directions. It combines these gradients to determine the final edge intensity.
+To compile the project, run:
 
-
-Compilation and Usage
-
-Compilation
-To compile the project, navigate to the project directory and run:
+```sh
 make
+```
 
-Usage
-To apply a filter to an image, use the following command syntax:
-./filter -[filter] [input.bmp] [output.bmp]
-Replace [filter] with one of the following options:
+This will produce an executable named `filter`.
 
--g for grayscale
--r for reflection
--b for blur
--e for edge detection
+## File Structure
 
-Replace [input.bmp] with the path to the input BMP file, and [output.bmp] with the desired output file name.
+- `filter.c`: Main program logic and file I/O.
+- `helpers.c`: Image processing filter implementations.
+- `helpers.h`: Function declarations for filters.
+- `bmp.h`: BMP file format structures.
+- `images/`: Sample BMP images for testing.
 
-Example Commands
-Grayscale an image:
+## Requirements
 
-./filter -g images/yard.bmp out.bmp
-Reflect an image:
+- C compiler (e.g., `clang` or `gcc`)
+- Make
 
-./filter -r images/yard.bmp out.bmp
-Blur an image:
+## Notes
 
-./filter -b images/yard.bmp out.bmp
-Detect edges in an image:
-
-./filter -e images/yard.bmp out.bmp
-
-Assumptions and Constraints
-The input images are 24-bit BMP files.
-The filters operate directly on RGB values as defined by the BMP format.
-Images are represented as 2D arrays of pixels, allowing easy manipulation of pixel data.
-Edge pixels are handled as if surrounded by a black border (0 RGB values) during blur and edge detection calculations.
-
-
-Conclusion
-This project demonstrates the fundamental principles of image processing using low-level pixel manipulation in C. By implementing grayscale, reflection, blur, and edge detection filters, the program showcases how images can be transformed using basic computational technique
+- Only 24-bit uncompressed BMP 4.0 files are supported.
+- The program will report errors for unsupported formats or incorrect usage.
